@@ -26,6 +26,7 @@ namespace GameClasses
         float angle = 0.0f;
         float scale = 1.0f;
         float layerdepth = 1.0f;
+        Timer timer = new Timer(0, 30);   //Timer for Timed clicking (So you wont double click every time)
         //Sound:
         SoundEffect OverSound;                            //Over button sound.
         SoundEffect ClickSound;                           //Click sound.
@@ -98,6 +99,12 @@ namespace GameClasses
             else { this.finaltex = tex; }
         }
 
+        public void ChangeTextures(Texture2D one, Texture2D over)
+        {
+            this.tex = one;
+            this.overtex = over;
+        }
+
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(finaltex, Size, c);
@@ -113,6 +120,7 @@ namespace GameClasses
         {
             sb.Draw(this.finaltex, new Vector2(Size.X, Size.Y), null, c, angle, Origin, scale, SpriteEffects.None, layerdepth);
         }
+
         private bool CheckCullosion(MouseState ms)
         {
             if (Size.Contains(ms.X, ms.Y))
@@ -130,10 +138,23 @@ namespace GameClasses
                     if (this.ClickSound != null) { ClickSound.Play(Volume); }
                     return true;
                 }
-                return false;
             }
-            else
-            { return false; }
+             return false; 
+        }
+
+        public bool CheckClickTimed(MouseState ms)
+        {
+            timer.Update();
+            if (ms.LeftButton == ButtonState.Pressed && timer.TimeOut)
+            {
+                if (CheckCullosion(ms))
+                {
+                    if (this.ClickSound != null) { ClickSound.Play(Volume); }
+                    timer.Reset();
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
