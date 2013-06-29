@@ -18,6 +18,9 @@ namespace GameClasses
         Vector2 cf;
         Vector2 ef;
         bool isplayed = false;
+        int FPS = 1;
+        int currentFrame = 1;
+
         public MiniAnimation(Vector2 position, ContentManager cm,string direction ,Vector2 CF, Vector2 EF, Vector2 FS)
         {
             this.pos = position;
@@ -25,7 +28,6 @@ namespace GameClasses
             sf = FS;
             cf = CF;
             ef = EF;
-
         }
         public MiniAnimation(Vector2 position, Texture2D tex, Vector2 CF, Vector2 EF, Vector2 FS)
         {
@@ -34,13 +36,23 @@ namespace GameClasses
             sf = FS;
             cf = CF;
             ef = EF;
+        }
 
+        public MiniAnimation(Vector2 position, Texture2D tex, Vector2 CF, Vector2 EF, Vector2 FS, int fps)
+        {
+            this.pos = position;
+            this.tex = tex;
+            sf = FS;
+            cf = CF;
+            ef = EF;
+            this.FPS = fps;
         }
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(tex, new Rectangle((int)this.pos.X, (int)this.pos.Y, (int)sf.X, (int)sf.Y)
                 , new Rectangle((int)cf.X * (int)sf.X, (int)cf.Y, (int)sf.X, (int)sf.Y)
                 , Color.White);
+            Update();
         }
 
         public void DrawMiror(SpriteBatch sb)
@@ -48,13 +60,16 @@ namespace GameClasses
             sb.Draw(tex, new Rectangle((int)this.pos.X, (int)this.pos.Y, (int)sf.X, (int)sf.Y)
                            , new Rectangle((int)cf.X * (int)sf.X, (int)cf.Y, (int)sf.X, (int)sf.Y)
                            , Color.White,0f,new Vector2(tex.Width/2,tex.Height/2),SpriteEffects.FlipHorizontally,1f);
+            Update();
         }
 
-        public void Update()
+        private void Update()
         {
-            if (isplayed) { return; }
+            currentFrame++;
+            if (isplayed && !(currentFrame>=FPS)) { return; }
             else
             {
+                currentFrame = 0;
                 this.cf.X++;
                 if (cf.X > ef.X)
                 {
