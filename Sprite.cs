@@ -131,12 +131,25 @@ namespace GameClasses
 
         #region Draws
         //-------------------DRAW
+        public void DrawSimple(SpriteBatch sb)
+        {
+            sb.Draw(this.Texture, this.Size, Color.White);
+        }
+
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this.Texture,
                 new Rectangle((int)(Position.X), (int)(Position.Y)
                     , (int)(Texture.Width * this.scale), (int)(Texture.Height * this.scale))
                 , null , Color.White, this.angle, this.Origin, SpriteEffects.None, LayerDepth);
+        }
+
+        public void Draw(SpriteBatch sb, Vector2 DrawingPos)
+        {
+            sb.Draw(this.Texture,
+                new Rectangle((int)(DrawingPos.X), (int)(DrawingPos.Y)
+                    , (int)(Texture.Width * this.scale), (int)(Texture.Height * this.scale))
+                , null, Color.White, this.angle, this.Origin, SpriteEffects.None, LayerDepth);
         }
 
         public void Draw(SpriteBatch sb, Rectangle r)
