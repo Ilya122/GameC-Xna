@@ -1,3 +1,4 @@
+//Notes in the end, please read! :>
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,3 +129,29 @@ namespace GameClasses
         }
     }
 }
+/*
+I've been reading and learning much more about animations and 2D\3D graphics, my update function isn't great because 
+on my previous games I assumed the game is running on 60 fps and everything is great, 
+This is a bit better function if you want to use:
+
+TimerPerFrame is calculated as : 
+      TimePerFrame= (float) (1/FramesPerSecond);
+
+      public void Update(GameTime gameTime)
+        {
+            float secondsElapsed =(float)gameTime.ElapsedGameTime.TotalSeconds;
+            TotalElapsed += secondsElapsed;
+
+            if (TotalElapsed > TimePerFrame)
+            { currentX++; TotalElapsed -= TimePerFrame; }
+            if (currentX> endFrameX)
+            {
+                currentY++;
+                currentX = startFrameX;
+                if (currentY>endFrameY)
+                {
+                    currentY = startFrameY;
+                }
+            }
+        }
+*/
